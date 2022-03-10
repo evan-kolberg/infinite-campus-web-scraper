@@ -15,8 +15,7 @@ driver = webdriver.Chrome(service=s, options=options)
 driver.set_window_size(3840, 2160)
 
 
-def setup():
-    # log in
+def login():
     driver.get('https://campus.bellmore-merrick.k12.ny.us/campus/portal/students/bellmore.jsp')
     WebDriverWait(driver, 8).until(
         expected_conditions.presence_of_element_located((By.ID, 'username'))
@@ -30,7 +29,8 @@ def setup():
     driver.find_element(By.XPATH, '/html/body/div/div[2]/div[1]/form/input[6]').click()
 
 
-def get_those_grades():
+def get_those_grade_updates():
+
     WebDriverWait(driver, 8).until(
         expected_conditions.presence_of_element_located(
             (By.XPATH, '/html/body/ic-nav-wrapper-app/ic-sidebar/div/ic-tool-list/nav/ul/li[4]/a'))
@@ -41,15 +41,12 @@ def get_those_grades():
     # use bs4's html parser to make it a custom ruleset
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-    print(soup.find('div', {'class': 'ellipsis-container'}))
+    for i in soup.findAll('div', {'_ngcontent-dxc-c716': ''}):
+        print(i.get_text())
 
-
-'''    for i in soup.findAll('div', {'class': 'ellipsis-container'}):
-        for j in soup.findAll('div', {'class': 'grading-score'}):
-            print(f'Your grade in {i.get_text()} is {j.get_text()}')
-    '''
 
 if __name__ == '__main__':
-    setup()
-    get_those_grades()
+    login()
+    get_those_grade_updates()
     driver.close()
+
