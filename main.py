@@ -16,6 +16,7 @@ driver.set_window_size(3840, 2160)
 
 
 def login():
+
     driver.get('https://campus.bellmore-merrick.k12.ny.us/campus/portal/students/bellmore.jsp')
     WebDriverWait(driver, 8).until(
         expected_conditions.presence_of_element_located((By.ID, 'username'))
@@ -38,9 +39,7 @@ def get_those_grade_updates():
 
     driver.find_element(By.XPATH, '/html/body/ic-nav-wrapper-app/ic-sidebar/div/ic-tool-list/nav/ul/li[4]/a').click()
 
-    # use bs4's html parser to make it a custom ruleset
     soup = BeautifulSoup(driver.page_source, 'html.parser')
-
     for i in soup.findAll('div', {'_ngcontent-dxc-c716': ''}):
         print(i.get_text())
 
