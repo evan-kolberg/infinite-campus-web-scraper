@@ -6,8 +6,8 @@ from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
 options = webdriver.ChromeOptions()
-# options.add_argument('--headless')
-# options.add_argument('--disable-gpu')
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
 options.add_argument('--disable-extensions')
 s = Service('C:/Users/ekpro/PycharmProjects/infinite-campus-web-scraper/chromedriver.exe')
 
@@ -46,20 +46,9 @@ def get_those_grade_updates():
         if count > 6:
             print(data.get_text())
 
-# in progress ~ currently cannot see data inside div.card.ng-star-inserted
-'''
-def class_averages():
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
-    print(soup.get_text())
-
-    for i in soup.findAll('div', {'_ngcontent-etu-c716': '', 'class': 'ellipsis-container'}):
-        for j in soup.findAll('div', {'_ngcontent-etu-c639': '', 'class': 'ng-star-inserted'}):
-            print(f'Your grade in {i.get_text()} is {j.get_text()}')
-'''
 
 if __name__ == '__main__':
     login()
     grades_page()
-    # class_averages()
-    # get_those_grade_updates()
+    get_those_grade_updates()
     driver.close()
